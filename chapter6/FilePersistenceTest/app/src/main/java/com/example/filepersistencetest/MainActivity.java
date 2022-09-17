@@ -1,11 +1,11 @@
 package com.example.filepersistencetest;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
