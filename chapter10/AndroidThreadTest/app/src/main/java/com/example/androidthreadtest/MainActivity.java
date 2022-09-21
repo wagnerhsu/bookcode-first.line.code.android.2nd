@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        text = (TextView) findViewById(R.id.text);
-        Button changeText = (Button) findViewById(R.id.change_text);
+        text = findViewById(R.id.text);
+        Button changeText = findViewById(R.id.change_text);
         changeText.setOnClickListener(this);
     }
 
@@ -42,13 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.change_text:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Message message = new Message();
-                        message.what = UPDATE_TEXT;
-                        handler.sendMessage(message); // 将Message对象发送出去
-                    }
+                new Thread(() -> {
+                    Message message = new Message();
+                    message.what = UPDATE_TEXT;
+                    handler.sendMessage(message); // 将Message对象发送出去
                 }).start();
                 break;
             default:
