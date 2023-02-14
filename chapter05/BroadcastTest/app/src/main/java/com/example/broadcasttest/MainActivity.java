@@ -10,6 +10,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     final String actionName = "lachesis_barcode_value_notice_broadcast";
@@ -29,16 +32,18 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(networkChangeReceiver, intentFilter);
         localBroadcastManager = LocalBroadcastManager.getInstance(this); // 获取实例
 
-        Button button = (Button) findViewById(R.id.btnSendBarcodeBroadcast);
+        Button button = findViewById(R.id.btnSendBarcodeBroadcast);
         button.setOnClickListener(v -> {
 
             Intent intent = new Intent(actionName);
-            intent.putExtra("lachesis_barcode_value_notice_broadcast_data_string", "12345");
+            Date dt = new Date();
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            intent.putExtra("lachesis_barcode_value_notice_broadcast_data_string", f.format(dt));
 
             sendBroadcast(intent);
         });
 
-        Button btnSendLocalBroadcast = (Button) findViewById(R.id.btnSendLocalBroadcast);
+        Button btnSendLocalBroadcast = findViewById(R.id.btnSendLocalBroadcast);
         btnSendLocalBroadcast.setOnClickListener(v -> {
             Intent intent = new Intent("com.example.broadcasttest.LOCAL_BROADCAST");
             localBroadcastManager.sendBroadcast(intent); // 发送本地广播
@@ -46,24 +51,19 @@ public class MainActivity extends AppCompatActivity {
         intentFilter = new IntentFilter();
         intentFilter.addAction(actionName);
         localReceiver = new LocalReceiver();
-        localBroadcastManager.registerReceiver(localReceiver, intentFilter); // 注册本地广播监听器
+        //localBroadcastManager.registerReceiver(localReceiver, intentFilter); // 注册本地广播监听器
+        registerReceiver(localReceiver,intentFilter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(networkChangeReceiver);
-        localBroadcastManager.unregisterReceiver(localReceiver);
+        //localBroadcastManager.unregisterReceiver(localReceiver);
+        unregisterReceiver(localReceiver);
     }
 
-    class LocalReceiver extends BroadcastReceiver {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context, "received local broadcast", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
 
 }
