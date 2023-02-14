@@ -5,10 +5,16 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Send Broadcast"
-        />
+            android:id="@+id/btnSendBarcodeBroadcast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Lachesis Broadcast"
+            />
+
+    <Button
+            android:text="Send Local BroadCast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSendLocalBroadcast"/>
 
 </LinearLayout>
