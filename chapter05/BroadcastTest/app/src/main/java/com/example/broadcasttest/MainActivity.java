@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //    private NetworkChangeReceiver networkChangeReceiver;
 
-
+    final String actionName = "lachesis_barcode_value_notice_broadcast";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.example.broadcasttest.LOCAL_BROADCAST");
-                localBroadcastManager.sendBroadcast(intent); // 发送本地广播
+                //Intent intent = new Intent("com.example.broadcasttest.LOCAL_BROADCAST");
+                Intent intent = new Intent(actionName);
+                intent.putExtra("lachesis_barcode_value_notice_broadcast_data_string","12345");
+                //localBroadcastManager.sendBroadcast(intent); // 发送本地广播
+                sendBroadcast(intent);
             }
         });
         intentFilter = new IntentFilter();
-        intentFilter.addAction("com.example.broadcasttest.LOCAL_BROADCAST");
+        intentFilter.addAction(actionName);
         localReceiver = new LocalReceiver();
         localBroadcastManager.registerReceiver(localReceiver, intentFilter); // 注册本地广播监听器
     }
