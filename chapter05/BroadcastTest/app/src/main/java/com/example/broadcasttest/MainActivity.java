@@ -51,8 +51,18 @@ public class MainActivity extends AppCompatActivity {
         intentFilter = new IntentFilter();
         intentFilter.addAction(actionName);
         localReceiver = new LocalReceiver();
-        //localBroadcastManager.registerReceiver(localReceiver, intentFilter); // 注册本地广播监听器
+        localBroadcastManager.registerReceiver(localReceiver, intentFilter); // 注册本地广播监听器
         registerReceiver(localReceiver,intentFilter);
+
+        Button btniData = findViewById(R.id.btnSendiDataBroadcast);
+        btniData.setOnClickListener(v->{
+            Intent intent = new Intent("android.intent.action.SCANRESULT");
+            Date dt = new Date();
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            intent.putExtra("value", f.format(dt));
+
+            sendBroadcast(intent);
+        });
     }
 
     @Override
