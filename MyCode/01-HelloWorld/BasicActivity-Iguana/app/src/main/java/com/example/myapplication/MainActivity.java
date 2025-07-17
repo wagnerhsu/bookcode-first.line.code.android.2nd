@@ -6,6 +6,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -14,14 +16,32 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
+import com.seuic.scankey.IKeyEventCallback;
+import com.seuic.scankey.ScanKeyService;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    String TAG = "MainActivity";
+    private ScanKeyService mScanKeyService = ScanKeyService.getInstance();
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    private IKeyEventCallback mCallback = new IKeyEventCallback.Stub() {
+        @Override
+        public void onKeyDown(int keyCode) throws RemoteException {
+            Log.d(TAG, "onKeyDown: keyCode=" + keyCode);
+        }
+
+        @Override
+        public void onKeyUp(int keyCode) throws RemoteException {
+            Log.d(TAG, "onKeyUp: keyCode=" + keyCode);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +62,33 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAnchorView(R.id.fab)
                         .setAction("Action", null).show();
+            }
+        });
+
+        Button btnStart = findViewById(R.id.btn_start);
+        Button btnStop = findViewById(R.id.btn_stop);
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    mScanKeyService.registerCallback(mCallback,"248,249,250");
+                    Toast.makeText(MainActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "注册失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    mScanKeyService.unregisterCallback(mCallback);
+                    Toast.makeText(MainActivity.this, "反注册成功", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "反注册失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
