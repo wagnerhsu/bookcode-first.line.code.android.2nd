@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <Button
-            android:id="@+id/btnSendBarcodeBroadcast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Send Lachesis Broadcast"
-            />
-
-    <Button
-            android:text="Send Local BroadCast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnSendLocalBroadcast"/>
-    <Button
-        android:text="Send iData BroadCast"
+        android:id="@+id/btnSendBarcodeBroadcast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnSendiDataBroadcast"/>
+        android:text="Send Lachesis Broadcast" />
+
+    <Button
+        android:id="@+id/btnSendLocalBroadcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Local BroadCast" />
+
+    <Button
+        android:id="@+id/btnSendiDataBroadcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send iData BroadCast" />
+
+    <Button
+        android:id="@+id/btnSendBhBroadcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send BH BroadCast" />
 
 </LinearLayout>

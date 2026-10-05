@@ -16,6 +16,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     final String actionName = "lachesis_barcode_value_notice_broadcast";
+
+    public static final String BAR_READ_ACTION="SYSTEM_BAR_READ";
     private IntentFilter intentFilter;
     private LocalReceiver localReceiver;
     private LocalBroadcastManager localBroadcastManager;
@@ -61,6 +63,15 @@ public class MainActivity extends AppCompatActivity {
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
             intent.putExtra("value", f.format(dt));
 
+            sendBroadcast(intent);
+        });
+        // Model: BN-HH-G02
+        Button btnSendBh = findViewById(R.id.btnSendBhBroadcast);
+        btnSendBh.setOnClickListener(v->{
+            Intent intent = new Intent(BAR_READ_ACTION);
+            Date dt = new Date();
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            intent.putExtra("BAR_VALUE", f.format(dt));
             sendBroadcast(intent);
         });
     }
